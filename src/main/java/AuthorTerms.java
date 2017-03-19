@@ -32,7 +32,7 @@ public class AuthorTerms {
     /*
      * Instantiate a Job object for your job's configuration.  
      */
-    Job job = new Job();
+    Job job = Job.getInstance();
     
     /*
      * Specify the jar file that contains your driver, mapper, and reducer.

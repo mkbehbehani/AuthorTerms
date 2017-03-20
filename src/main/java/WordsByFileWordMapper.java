@@ -21,6 +21,9 @@ import org.apache.hadoop.mapreduce.Mapper;
  */
 
 public class WordsByFileWordMapper extends Mapper<LongWritable, Text, Text, Text> {
+//  extract every author in the dataset - pass 1
+
+
 
   /*
    * The map method runs once for each line of text in the input file.
@@ -37,6 +40,7 @@ public class WordsByFileWordMapper extends Mapper<LongWritable, Text, Text, Text
      */
     String fileName = ((FileSplit) context.getInputSplit()).getPath().getName();
     String line = value.toString();
+    String[] authorNames = line.split(":::")[1].split("::");
 
     /*
      * The line.split("\\W+") call uses regular expressions to split the
@@ -45,7 +49,7 @@ public class WordsByFileWordMapper extends Mapper<LongWritable, Text, Text, Text
      * If you are not familiar with the use of regular expressions in
      * Java code, search the web for "Java Regex Tutorial." 
      */
-    for (String word : line.split("\\W+")) {
+    for (String word : authorNames) {
       if (word.length() > 0) {
         MapWritable result = new MapWritable();
         Writable currentFile = new Text(fileName);

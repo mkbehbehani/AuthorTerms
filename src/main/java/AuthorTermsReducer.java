@@ -19,7 +19,7 @@ import org.apache.hadoop.mapreduce.Reducer;
  *   The data type of the output key
  *   The data type of the output value
  */   
-public class WordsByFileSumReducer extends Reducer<Text, Text, Text, Text > {
+public class AuthorTermsReducer extends Reducer<Text, Text, Text, Text > {
 
   /*
    * The reduce method runs once for each key received from

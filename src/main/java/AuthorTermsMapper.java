@@ -1,16 +1,11 @@
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.lib.input.FileSplit;
+
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ListIterator;
-
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.MapWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.Writable;
-import org.apache.hadoop.mapreduce.lib.input.FileSplit;
-import org.apache.hadoop.mapreduce.Mapper;
 
 /* 
  * To define a map function for your MapReduce job, subclass 
@@ -24,7 +19,7 @@ import org.apache.hadoop.mapreduce.Mapper;
  *   type for the reducer)
  */
 
-public class WordsByFileWordMapper extends Mapper<LongWritable, Text, Text, Text> {
+public class AuthorTermsMapper extends Mapper<LongWritable, Text, Text, Text> {
 //  extract every author in the dataset - pass 1
 
 
@@ -42,7 +37,6 @@ public class WordsByFileWordMapper extends Mapper<LongWritable, Text, Text, Text
      * Convert the line, which is received as a Text object,
      * to a String object.
      */
-    String fileName = ((FileSplit) context.getInputSplit()).getPath().getName();
     String line = value.toString();
     String[] authorNames = line.split(":::")[1].split("::");
     String publicationTitle = line.split(":::")[2].split("::")[0];
@@ -50,28 +44,11 @@ public class WordsByFileWordMapper extends Mapper<LongWritable, Text, Text, Text
     TermsCleaner titleCleaner = new TermsCleaner();
     titleCleaner.clean(publicationTitleTerms);
 
-
-
-      
-    /*
-     * The line.split("\\W+") call uses regular expressions to split the
-     * line up by non-word characters.
-     * 
-     * If you are not familiar with the use of regular expressions in
-     * Java code, search the web for "Java Regex Tutorial." 
-     */
-    for (String word : authorNames) {
-      if (word.length() > 0) {
-        MapWritable result = new MapWritable();
-        Writable currentFile = new Text(fileName);
-        Writable currentCount = new IntWritable(1);
-        result.put(currentFile, currentCount);
-		/*
-         * Call the write method on the Context object to emit a key
-         * and a value from the map method.
-         */
-        context.write(new Text(word), new Text(fileName));
-      }
+//    for each author in the line create kv pairs of author and every word in the term list
+    for (String author : authorNames) {
+      for (String term : publicationTitleTerms) {
+        context.write(new Text(author), new Text(term));
+        }
     }
   }
 }

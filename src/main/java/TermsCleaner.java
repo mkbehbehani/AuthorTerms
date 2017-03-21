@@ -7,6 +7,7 @@ public class TermsCleaner {
     public List<String> clean(List<String> rawTerms){
       removeStopWords(rawTerms);
       removeWordsShorterThan(2, rawTerms);
+      removeAllCharacterInstances("-", rawTerms);
       return rawTerms;
     }
     private void removeStopWords(List<String> wordList){
@@ -21,6 +22,11 @@ public class TermsCleaner {
             if (currentWord.length() < length){
                 wordList.remove(currentWordIndex);
             }
+        }
+    }
+    private void removeAllCharacterInstances(String targetCharacter, List<String> wordList){
+        for (String word: wordList){
+          word.replaceAll(targetCharacter, "");
         }
     }
     private List<String> stopWords(){

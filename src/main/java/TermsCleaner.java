@@ -8,24 +8,13 @@ public class TermsCleaner {
     public List<String> clean(List<String> rawTerms){
       ArrayList<String> cleansedTerms = new ArrayList<String>(rawTerms);
       removeStopWords(cleansedTerms);
-//      removeAllCharacterInstances("-", rawTerms);
-//      removeWordsShorterThan(2, rawTerms);
+      removeAllCharacterInstances("-", cleansedTerms);
       return cleansedTerms;
     }
     private void removeStopWords(List<String> wordList){
         wordList.removeAll(stopWords());
     }
-    private void removeWordsShorterThan(int length, List<String> wordList){
-        ListIterator<String> titleTermsIterator = wordList.listIterator();
 
-        while (titleTermsIterator.hasNext()){
-            String currentWord = titleTermsIterator.next();
-            int currentWordIndex = titleTermsIterator.nextIndex();
-            if (currentWord.length() < length){
-                wordList.remove(currentWordIndex);
-            }
-        }
-    }
     private void removeAllCharacterInstances(String targetCharacter, List<String> wordList){
         for (String word: wordList){
           word.replaceAll(targetCharacter, "");

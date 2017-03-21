@@ -41,13 +41,15 @@ public class AuthorTermsMapper extends Mapper<LongWritable, Text, Text, Text> {
     String[] authorNames = line.split(":::")[1].split("::");
     String publicationTitle = line.split(":::")[2].split("::")[0];
     List<String> publicationTitleTerms = Arrays.asList(publicationTitle.split("\\W"));
-//    TermsCleaner titleCleaner = new TermsCleaner();
-//    titleCleaner.clean(publicationTitleTerms);
+    TermsCleaner titleCleaner = new TermsCleaner();
+    List<String> cleansedTitles = titleCleaner.clean(publicationTitleTerms);
 
 //    for each author in the line create kv pairs of author and every word in the term list
     for (String author : authorNames) {
-      for (String term : publicationTitleTerms) {
-        context.write(new Text(author), new Text(term));
+      for (String term : cleansedTitles) {
+        if(term.length() > 2) {
+          context.write(new Text(author), new Text(term));
+        }
         }
     }
   }

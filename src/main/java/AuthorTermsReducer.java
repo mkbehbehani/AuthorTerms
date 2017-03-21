@@ -18,13 +18,13 @@ public class AuthorTermsReducer extends Reducer<Text, Text, Text, Text > {
 		for (Text value : values) {
 			 termInstancesForAuthor.add(value.toString());
 		}
-		Set<String> dedupedFiles = new HashSet<String>( termInstancesForAuthor);
+		Set<String> dedupedAuthors = new HashSet<String>( termInstancesForAuthor);
         ArrayList<String> resultsWithCount = new ArrayList<String>();
         
-        for (String fileName : dedupedFiles){
-        	Integer occurancesInFile = Collections.frequency( termInstancesForAuthor, fileName);
-        	String filenameWithCount = String.format("\"%s\": %s", fileName, occurancesInFile.toString());
-            resultsWithCount.add(filenameWithCount);
+        for (String author : dedupedAuthors){
+        	Integer occurencesForAuthor = Collections.frequency( termInstancesForAuthor, author);
+        	String termWithCount = String.format("\"%s\": %s", author, occurencesForAuthor.toString());
+            resultsWithCount.add(termWithCount);
         }
 
 		context.write(key, new Text(resultsWithCount.toString()));

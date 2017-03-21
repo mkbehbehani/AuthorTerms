@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
@@ -5,10 +6,11 @@ import java.util.ListIterator;
 public class TermsCleaner {
 
     public List<String> clean(List<String> rawTerms){
-      removeStopWords(rawTerms);
-      removeAllCharacterInstances("-", rawTerms);
-      removeWordsShorterThan(2, rawTerms);
-      return rawTerms;
+      ArrayList<String> cleansedTerms = new ArrayList<String>(rawTerms);
+      removeStopWords(cleansedTerms);
+//      removeAllCharacterInstances("-", rawTerms);
+//      removeWordsShorterThan(2, rawTerms);
+      return cleansedTerms;
     }
     private void removeStopWords(List<String> wordList){
         wordList.removeAll(stopWords());

@@ -57,8 +57,8 @@ public class AuthorTerms {
     /*
      * Specify the mapper and reducer classes.
      */
-    job.setMapperClass(WordsByFileWordMapper.class);
-    job.setReducerClass(WordsByFileSumReducer.class);
+    job.setMapperClass(AuthorTermsMapper.class);
+    job.setReducerClass(AuthorTermsReducer.class);
 
     /*
      * For the word count application, the input file and output 

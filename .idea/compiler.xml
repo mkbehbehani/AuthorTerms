@@ -24,8 +24,8 @@
         <module name="AuthorTerms" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="AuthorTerms" target="1.5" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="AuthorTerms" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

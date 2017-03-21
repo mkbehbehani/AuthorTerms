@@ -23,6 +23,7 @@ public class AuthorTermsMapper extends Mapper<LongWritable, Text, Text, Text> {
 //    for each author in the line, create kv pairs of author and every word in the term list
     for (String author : authorNames) {
       for (String term : cleansedTitles) {
+        // temporarily put length check here due to weird concurrency errors from hadoop when using iterator over collection.
         if(term.length() > 2) {
           context.write(new Text(author), new Text(term));
         }

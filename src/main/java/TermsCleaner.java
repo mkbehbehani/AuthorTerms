@@ -6,8 +6,8 @@ public class TermsCleaner {
 
     public List<String> clean(List<String> rawTerms){
       removeStopWords(rawTerms);
-      removeWordsShorterThan(2, rawTerms);
       removeAllCharacterInstances("-", rawTerms);
+      removeWordsShorterThan(2, rawTerms);
       return rawTerms;
     }
     private void removeStopWords(List<String> wordList){
